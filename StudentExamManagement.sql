@@ -61,3 +61,85 @@ select  * from student;
 
 select student_name, email from student;
 
+# Exams between two dates
+
+select s.subject_name, e.exam_date, e.duration_minutes from examschedule e join subject s on s.subject_id = e.subject_id where exam_date between '2024-04-03' and '2024-04-10';
+
+# Questions with difficulty = 'Hard'
+
+select * from question where difficulty_level = 'Hard';
+
+# Students whose name starts with 'A'
+
+select * from student where student_name like 'A%';
+
+# Students whose email ends with gmail.com
+
+select * from student where email like '%gmail.com';
+
+# Subjects containing 'Math'
+select * from subject where subject_name like 'Math%';
+
+# Questions having marks between 5 and 10
+
+select * from question where marks between 5 and 10;
+
+# Results where marks_obtained >= 40
+
+select s.student_id, s.student_name, r.marks_obtained, r.result_status from student s inner join result r on s.student_id = r.student_id where r.marks_obtained >= 40 ;
+
+# Students from multiple cities
+
+select student_name, city from student;
+
+# Exams longer than 90 minutes
+
+select es.exam_date, sub.subject_name, es.duration_minutes from examschedule es join subject sub where es.duration_minutes > 90;
+
+# Male students from Mumbai
+
+select * from student where gender = 'male' and city = 'Mumbai';
+
+# Subjects with total_marks between 50 and 100
+
+select * from subject where total_marks between 50 and 100;
+
+# .Questions with marks = 5
+
+select * from question where marks = 5;
+
+# Students whose name contains 'hu'
+
+select * from student where student_name like '%hu%';
+
+# Results with status 'Pass'
+
+select s.student_id, s.student_name, r.marks_obtained, r.result_status from student s join result r on r.student_id = s.student_id where r.result_status = 'pass';
+
+# Students ordered by name
+
+select * from student order by student_name;
+
+# Students ordered by registration_date DESC
+
+select * from student order by registration_date;
+
+# Subjects ordered by total_marks DESC
+
+select * from subject order by total_marks;
+
+# Questions ordered by marks
+
+select * from question order by marks;
+
+# Results ordered by marks_obtained DESC
+
+select s.student_id, s.student_name, r.marks_obtained from student s join result r on s.student_id = r.student_id order by r.marks_obtained desc;
+
+# Exams ordered by date
+
+select * from examschedule order by exam_date;
+
+# Students ordered by city then name
+
+select * from student order by city, student_name;
