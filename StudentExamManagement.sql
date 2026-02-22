@@ -78,6 +78,7 @@ select * from student where student_name like 'A%';
 select * from student where email like '%gmail.com';
 
 # Subjects containing 'Math'
+
 select * from subject where subject_name like 'Math%';
 
 # Questions having marks between 5 and 10
@@ -104,7 +105,7 @@ select * from student where gender = 'male' and city = 'Mumbai';
 
 select * from subject where total_marks between 50 and 100;
 
-# .Questions with marks = 5
+# Questions with marks = 5
 
 select * from question where marks = 5;
 
@@ -122,7 +123,7 @@ select * from student order by student_name;
 
 # Students ordered by registration_date DESC
 
-select * from student order by registration_date;
+select * from student order by registration_date desc;
 
 # Subjects ordered by total_marks DESC
 
@@ -143,3 +144,98 @@ select * from examschedule order by exam_date;
 # Students ordered by city then name
 
 select * from student order by city, student_name;
+
+# Hard questions ordered by marks DESC
+
+select * from question where difficulty_level = 'Hard' order by marks desc;
+
+# Passed results ordered by marks
+
+select * from result where result_status = 'Pass' order by marks_obtained;
+
+# Subjects containing 'Science' ordered
+
+select * from subject where subject_name = 'Physics' order by subject_id;
+
+# Student with their exam results
+
+select s.student_id, s.student_name, r.marks_obtained, r.result_status from student s inner join result r on s.student_id = r.student_id;
+
+# Student with exam date
+
+select s.student_id, s.student_name, ex.exam_date from student s join result r on r.student_id = s.student_id join examschedule ex on ex.exam_id = r.exam_id;
+
+# Student with subject name
+
+select s.student_id, s.student_name, sbj.subject_name,ex.exam_date from student s join result r on r.student_id = s.student_id join examschedule ex on ex.exam_id = r.exam_id join subject sbj on sbj.subject_id = ex.subject_id;
+
+# Subject with questions
+
+select sbj.subject_name, q.question_text from subject sbj join subjectquestion sq on sq.subject_id = sbj.subject_id join question q on sq.question_id = q.question_id;
+
+# Left join students and results
+
+select s.student_id, s.student_name, r.result_id, r.exam_id, r.marks_obtained, r.result_status from student s left join result r on s.student_id = r.student_id;
+
+# Right join results and student
+
+select s.student_id, s.student_name, r.exam_id, r.result_id, r.marks_obtained, r.result_status from result r right join student s on s.student_id = r.student_id;
+
+# Students who passed with subject name
+
+select s.student_id, s.student_name, r.result_status from student s join result r on s.student_id = r.student_id join examschedule ex on r.exam_id = ex.exam_id join subject sbj on sbj.subject_id = ex.subject_id where r.result_status = 'Pass';
+
+# Count students by city
+
+select count(student_id) as student_count, city from student group by city;
+
+# Count students by gender
+
+select gender, count(student_id) as count from student group by gender;
+
+# Total exams per subject
+
+select sbj.subject_name, count(e.exam_id) from subject sbj inner join examschedule e on e.subject_id = sbj.subject_id group by sbj.subject_name;
+
+# Average marks per student
+
+select s.student_id, s.student_name, avg(r.marks_obtained) as average_marks from student s join result r on s.student_id = r.student_id group by s.student_id, s.student_name order by average_marks desc;
+
+# Students with avg marks > 60
+
+select s.student_id, s.student_name, avg(r.marks_obtained) as avg_mark from student s join result r on s.student_id = r.student_id group by s.student_id, s.student_name having avg_mark > 60;
+
+# Count questions per subject
+
+select sbj.subject_name, count(sq.subject_id) from subjectquestion sq join subject sbj on sbj.subject_id = sq.subject_id group by sbj.subject_name;
+
+# Subjects having more than 5 questions 
+
+select sbj.subject_name, count(sq.question_id) as count from subject sbj join subjectquestion sq on sq.subject_id = sbj.subject_id group by sbj.subject_name having count > 1;
+
+# Total marks obtained per exam
+
+select ex.exam_id, ex.exam_date, sum(r.marks_obtained) as total_marks from examschedule ex join result r on ex.exam_id = r.exam_id group by ex.exam_id;
+
+# Exams where total marks > 150
+
+select ex.exam_id, ex.exam_date, sum(r.marks_obtained) as total_mark from examschedule ex inner join result r on ex.exam_id = r.exam_id group by ex.exam_id having total_mark > 150;
+
+# Count pass and fail
+
+select r.result_status, count(r.result_id) from result r group by r.result_status;
+
+# Student Name, Subject Name, Exam Date, Marks
+
+select s.student_name, sbj.subject_name, ex.exam_date, r.marks_obtained from student s inner join result r on s.student_id = r.student_id inner join examschedule ex on ex.exam_id = r.exam_id inner join subject sbj on ex.subject_id = sbj.subject_id;
+
+# Students Who Scored More Than 70
+
+select s.student_name, r.marks_obtained, r.result_status, sbj.subject_name, ex.exam_date, ex.duration_minutes from student s inner join result r on s.student_id = r.student_id inner join examschedule ex on ex.exam_id = r.exam_id inner join subject sbj on sbj.subject_id = ex.subject_id where r.marks_obtained > 70;
+
+# Count of Exams Given by Each Student
+
+select s.student_id,s.student_name ,count(r.exam_id) from student s left join result r on s.student_id = r.student_id group by s.student_id;
+
+
+
