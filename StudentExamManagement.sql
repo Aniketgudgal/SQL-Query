@@ -237,5 +237,26 @@ select s.student_name, r.marks_obtained, r.result_status, sbj.subject_name, ex.e
 
 select s.student_id,s.student_name ,count(r.exam_id) from student s left join result r on s.student_id = r.student_id group by s.student_id;
 
+# Average Marks Per Subject
+
+select sbj.subject_name, avg(r.marks_obtained), sbj.total_marks from result r inner join examschedule s on s.exam_id = r.exam_id inner join subject sbj on sbj.subject_id = s.subject_id group by sbj.subject_name, sbj.total_marks;
+
+# Subjects With More Than 3 Students Appeared
+
+select sbj.subject_name, count(r.exam_id) from subject sbj inner join examschedule sb on sb.subject_id = sbj.subject_id inner join result r on r.exam_id = sb.exam_id group by sbj.subject_name;
+
+# Student Exam Details Between Two Dates
+
+select s.student_name, sbj.subject_name, ex.exam_date from student s inner join result r on r.student_id = s.student_id inner join examschedule ex on ex.exam_id =  r.exam_id inner join subject sbj on sbj.subject_id = ex.subject_id where ex.exam_date between '2024-04-05' and '2024-04-15';
+
+# Total Marks Obtained Per Student
+
+select s.student_name, sum(r.marks_obtained) from student s left join result r on s.student_id = r.student_id group by s.student_name;
+
+#  Hard Questions Per Subject
+
+select sbj.subject_name, count(sq.question_id), q.difficulty_level from subject sbj inner join subjectquestion sq on sq.subject_id = sbj.subject_id inner join question q on q.question_id = sq.question_id where q.difficulty_level = 'Hard' group by sbj.subject_name;
+
+
 
 
