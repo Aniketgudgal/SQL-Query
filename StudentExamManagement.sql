@@ -257,6 +257,78 @@ select s.student_name, sum(r.marks_obtained) from student s left join result r o
 
 select sbj.subject_name, count(sq.question_id), q.difficulty_level from subject sbj inner join subjectquestion sq on sq.subject_id = sbj.subject_id inner join question q on q.question_id = sq.question_id where q.difficulty_level = 'Hard' group by sbj.subject_name;
 
+# Students Who Failed
+
+select s.student_id, s.student_name, s.city, r.result_status from student s left join result r on r.student_id = s.student_id where r.result_status = 'Fail';
+
+# Exam Duration With Subject
+
+select sbj.subject_name, ex.duration_minutes from subject sbj left join examschedule ex on ex.subject_id = sbj.subject_id;
+
+# Students From Pune Appeared in Exams
+
+select s.student_id, s.student_name, s.city from student s right join result r on r.student_id = s.student_id where s.city = 'Pune';
+
+# Count Questions Per Subject
+
+select s.subject_name, count(q.question_id) from subject s left join subjectquestion q on q.subject_id = s.subject_id group by s.subject_name;
+
+# Students Appeared in More Than 1 Exams
+
+select s.student_id, s.student_name, count(r.exam_id) from student s inner join result r on r.student_id = s.student_id group by s.student_id, s.student_name having count(r.exam_id) > 1 ;
+
+# Average Marks Greater Than 60
+
+select s.student_name, avg(r.marks_obtained) from student s inner join result r on r.student_id = s.student_id group by s.student_name having avg(r.marks_obtained) > 60;
+
+#  Easy Questions With Subject
+
+select sbj.subject_name, q.difficulty_level, q.question_text from subject sbj left join subjectquestion sq on sq.subject_id = sbj.subject_id right join question q on q.question_id = sq.question_id where q.difficulty_level = 'Easy';
+
+# Students and Total Exams Per Subject
+
+select s.student_name, sbj.subject_name, count(r.exam_id) from student s inner join result r on r.student_id = s.student_id inner join examschedule ex on ex.exam_id = r.exam_id inner join subject sbj on ex.subject_id = sbj.subject_id group by s.student_name, sbj.subject_name;
+
+# Highest Marks Per Exam
+
+select exam_id, max(marks_obtained) from result group by exam_id;
+
+# Lowest Marks Per Subject
+
+select exam_id, min(marks_obtained) from result group by exam_id;
+
+# Students Appeared in Subjects Containing 'Math'
+
+select s.student_id, s.student_name, sbj.subject_name from student s inner join result r on r.student_id = s.student_id inner join examschedule ex on ex.exam_id = r.exam_id inner join subject sbj on sbj.subject_id = ex.subject_id where sbj.subject_name like 'Math%';
+
+# Count Students By Gender In Exams
+
+select s.gender, count(r.exam_id) from student s inner join result r group by s.gender;
+
+# Students Who Appeared in 2024 Exams
+
+select s.student_id, s.student_name from student s inner join result r on r.student_id = s.student_id inner join examschedule ex on ex.exam_id = r.exam_id where year(ex.exam_date) = 2024;
+
+# Total Marks Per Subject
+
+select subject_name, total_marks from subject;
+
+# Students Who Passed More Than 1 Exam
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
