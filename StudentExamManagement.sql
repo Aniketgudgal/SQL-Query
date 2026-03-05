@@ -315,6 +315,18 @@ select subject_name, total_marks from subject;
 
 # Students Who Passed More Than 1 Exam
 
+select s.student_name, r.student_id, count(r.exam_id) as total_exam_count from result r inner join student s on s.student_id = r.student_id group by r.student_id having total_exam_count > 1 ;
+
+# Students Ordered By Total Marks Desc
+
+select s.student_id, r.marks_obtained from student s left join result r on r.student_id = s.student_id order by r.marks_obtained desc;
+
+# Subjects With Exam Duration > 90
+
+select sbj.subject_name, ex.duration_minutes from subject sbj left join examschedule ex on ex.subject_id = sbj.subject_id where ex.duration_minutes > 90;
+
+# Students From Pune Who Passed
+z1sdw3rbabn93qw23abmnkjl;
 
 
 
