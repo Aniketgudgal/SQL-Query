@@ -19,3 +19,7 @@ select * from employee where salary > (select min(salary) from employee);
 # Display employees whose department location is 'Mumbai'.
 
  select * from employee where dept_id = (select dept_id from department where location = 'Mumbai');
+ 
+ # Find employees who are working on any project.
+ 
+select * from employee where emp_id IN ( select emp_id from project );
