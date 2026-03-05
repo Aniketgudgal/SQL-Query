@@ -10,9 +10,12 @@ select * from employee where salary > (select avg(salary) from employee);
 
 # Write a query to display employees who work in the department named 'HR'.
 
-select * from employee where dept_id = (select * from department where dept_name = 'HR');
+select * from employee where dept_id = (select dept_id from department where dept_name = 'HR');
 
 # Find employees whose salary is greater than the minimum salary in the Employee table.
 
 select * from employee where salary > (select min(salary) from employee);
 
+# Display employees whose department location is 'Mumbai'.
+
+ select * from employee where dept_id = (select dept_id from department where location = 'Mumbai');
