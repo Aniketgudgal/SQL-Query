@@ -23,3 +23,23 @@ select * from employee where salary > (select min(salary) from employee);
  # Find employees who are working on any project.
  
 select * from employee where emp_id IN ( select emp_id from project );
+
+# Display employees whose salary is equal to the maximum salary in the Employee table.
+
+select * from employee where salary = (select max(salary) from employee);
+
+# Find employees who joined in the same year as employee with emp_id = 3.
+
+ select * from employee where join_year = (select join_year from employee where emp_id = 3);
+ 
+ # Display employees whose salary is greater than the salary of employee 'Rahul'.
+
+select * from employee where salary > (select salary from employee where emp_name = 'Rahul');
+
+# Find employees whose department id exists in the Department table.
+
+select * from employee e where exists (select dept_id from department d where e.dept_id = d.dept_id);
+
+# Display employees who are working on a project with budget greater than 50000.
+
+select * from employee where emp_id in (select emp_id from project where budget > 50000);
