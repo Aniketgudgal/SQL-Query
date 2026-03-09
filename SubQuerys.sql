@@ -43,3 +43,22 @@ select * from employee e where exists (select dept_id from department d where e.
 # Display employees who are working on a project with budget greater than 50000.
 
 select * from employee where emp_id in (select emp_id from project where budget > 50000);
+
+# Write a query to display employees whose salary is greater than the average salary of their department.
+
+select * from employee e where salary > (select avg(salary) from employee where dept_id = e.dept_id);
+
+# Find departments where no employee is assigned.
+
+select * from employee e where not exists(select dept_id from department where e.dept_id = dept_id);
+
+# Display employees who earn more than the average salary of employees in 'IT' department.
+
+select * from employee where salary > (select avg(salary) from employee where dept_id = (select dept_id from department where dept_name = 'IT'));
+
+# Find employees who are working on the project with the highest budget.
+
+select * from employee where emp_id IN (select emp_id from project where budget = (select max(budget) from project));
+
+# Display employees whose salary is higher than at least one employee in department 2.
+
