@@ -62,3 +62,20 @@ select * from employee where emp_id IN (select emp_id from project where budget 
 
 # Display employees whose salary is higher than at least one employee in department 2.
 
+ select * from employee where  salary > any (select salary from employee  where dept_id = 2);
+ 
+ # Find employees whose salary is less than the maximum salary in their department.
+
+select * from employee e where salary < (select max(salary) from employee p where p.dept_id = e.dept_id);
+
+# Display employees who work in departments located in the same location as the 'Sales' department.
+
+select * from employee where dept_id IN (select dept_id from department where location = (select location from department where location = 'Sales'));
+
+# Find employees who are not assigned to any project.
+
+select * from employee e where not exists (select emp_id from project p where e.emp_id = p.emp_id);
+
+# Display departments where average salary of employees is greater than 60000.
+
+
